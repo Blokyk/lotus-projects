@@ -1,0 +1,3 @@
+[submodule "game-list"]
+	path = game-list
+	url = https://github.com/ZacharyPatten/dotnet-console-games.git
