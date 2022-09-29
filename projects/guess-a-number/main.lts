@@ -9,7 +9,7 @@ func main(): void { // allow omitting 'void'
         print("Guess a new number between 0 and 100:"); // todo: provide an easy way to write without \n at the end
 
         /*
-        * let temp = fmt.parseInt(readLine())
+        * let temp = fmt.parse_int(read_line())
         * if !(temp.is_ok()) {
         *     // note: guess isn't definitely assigned here yet (if we didn't write "guess = -1" at least)
         *     print(...);
@@ -19,7 +19,7 @@ func main(): void { // allow omitting 'void'
         * guess = temp!;
         */
 
-        if !(guess ?= fmt.parseInt(readLine())) {
+        if !(guess ?= fmt.parse_int(read_line())) {
             print("That's not an integer...");
             continue;
         }
