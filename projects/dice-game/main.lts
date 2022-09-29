@@ -1,0 +1,41 @@
+import random, console from std;
+
+func main(): void {
+    var ai_points = 0;
+    var player_points = 0;
+
+    for (int i = 0, i < 10, i++) {
+        print($"== Round {i + 1} ==");
+
+        let ai_num = random.next(1, 7);
+        print($"AI rolled {ai_num}");
+
+        let player_num = random.next(1, 7);
+        print($"But you rolled {player_num}!");
+
+        if (player_num < ai_num) {
+            print("Sorry :(");
+            ai_points++;
+        } else if (player_num > ai_num) {
+            print("Congrats!");
+            player_points++;
+        } else {
+            print("That's a draw!");
+        }
+
+        print("Scores:");
+        print($" - AI: {ai_points}");
+        print($" - You: {player_points}");
+
+        print();
+        print("Press a key for the next round...");
+        console.readKey(printKey: false);
+    }
+
+    if (player_points < ai_points)
+        print("Game over...");
+    else if (player_points > ai_points)
+        print("You won!");
+    else
+        print("Wow, the game is a draw!");
+}
