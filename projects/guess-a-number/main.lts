@@ -1,0 +1,41 @@
+using random, fmt from std;
+
+func main(): void { // allow omitting 'void'
+    let target = random.next(0, 101);
+
+    var guess = -1;
+
+    while (guess != target) {
+        print("Guess a new number between 0 and 100:"); // todo: provide an easy way to write without \n at the end
+
+        /*
+        * let temp = fmt.parseInt(readLine())
+        * if !(temp.is_ok()) {
+        *     // note: guess isn't definitely assigned here yet (if we didn't write "guess = -1" at least)
+        *     print(...);
+        *     continue;
+        * }
+        *
+        * guess = temp!;
+        */
+
+        if !(guess ?= fmt.parseInt(readLine())) {
+            print("That's not an integer...");
+            continue;
+        }
+
+        if (guess < 0 || 100 < guess) { // allow "0 <= guess <= 100" or add range+inclusion (guess in 0..101)
+            print($"{guess} is not between 0 and 100...");
+            continue;
+        }
+
+        var diff = target - guess;
+
+        if (diff < 0)
+            print("Too high!");
+        else if (diff > 0)
+            print("Too low!");
+    }
+
+    print("Congrats!");
+}
