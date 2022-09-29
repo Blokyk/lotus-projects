@@ -1,0 +1,42 @@
+using random, fmt from std;
+using MoveType from "move_type.lts";
+
+func main(): void {
+    while (true) {
+        let player_move = next_player_move();
+        let ai_move = next_ai_move();
+        print($"The AI played {ai_move}!");
+
+        switch (player_move, ai_move) {
+            case (rock, scissors):
+            case (scissors, paper):
+            case (paper, rock):
+                print("You won!");
+            case (scissors, rock):
+            case (paper, scissors):
+            case (rock, paper):
+                print("You lost!");
+            case _:
+                print("Draw!");
+        }
+    }
+}
+
+func next_player_move(): MoveType {
+    print("Choose your move: [r]ock, [p]aper, [s]cissors or [e]xit");
+
+    let player_move: MoveType;
+    let move_str = read_line();
+
+    if !(player_move ?= MoveType.parse(move_str)) {
+        print($"'{move_str}' isn't a valid move...");
+        player_move = nextPlayerMove(); // definitely assign player_move
+    }
+
+    return player_move;
+}
+
+func next_ai_move(): MoveType {
+    // end at 3 to avoid exit :P
+    return random.next(0, 3) as MoveType!; // shorthand for (foo as Bar)! -> crashes if .is_ok() is false
+}
