@@ -1,4 +1,4 @@
-enum MoveType {
+enum MoveTypes {
     rock, paper, scissors, exit
 }
 
@@ -6,22 +6,22 @@ enum MoveType {
 // because instance impls on ADUs would mean override-hell
 // all over again ;-;
 
-impl MoveType { // implements static members
-    func parse(in string str): MoveType? { // Option<T> shorthand
+impl MoveTypes { // implements static members
+    func parse(in string str): MoveTypes? { // Option<T> shorthand
         // allow switch/match expressions (but what about set-and-return ? :thinking:)
         switch (str) {
             case "rock":
             case "r":
-                return MoveType.rock
+                return MoveTypes.rock
             case "paper":
             case "p":
-                return MoveType.paper;
+                return MoveTypes.paper;
             case "scissors":
             case "s":
-                return MoveType.scissors;
+                return MoveTypes.scissors;
             case "exit":
             case "e":
-                return MoveType.exit;
+                return MoveTypes.exit;
             case _:
                 return default;
         }

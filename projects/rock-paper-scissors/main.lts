@@ -1,5 +1,4 @@
 using random, fmt from std;
-using MoveType from "move_type.lts";
 
 func main(): void {
     while (true) {
