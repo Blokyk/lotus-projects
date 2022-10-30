@@ -2,13 +2,16 @@ enum MoveTypes {
     rock, paper, scissors, exit
 }
 
-// note: maybe we should only allow enums to impl static stuff,
-// because instance impls on ADUs would mean override-hell
-// all over again ;-;
+// todo(semantic): we should allow enums to only impl static stuff,
+// because instance impls on ADUs might mean override-hell all over again ;-;
 
-impl MoveTypes { // implements static members
-    func parse(in string str): MoveTypes? { // Option<T> shorthand
-        // allow switch/match expressions (but what about set-and-return ? :thinking:)
+impl MoveTypes { // != impl this for MoveTypes
+    func parse(in string str): MoveTypes? { // todo(syntax): Result<T> shorthand
+        // todo(syntax): allow switch/match expressions
+
+        // todo(semantic): IF we get switch expressions, we should try to add
+        // target-type info so as to avoid repeting MoveTypes all the time
+
         switch (str) {
             case "rock":
             case "r":
@@ -23,7 +26,7 @@ impl MoveTypes { // implements static members
             case "e":
                 return MoveTypes.exit;
             case _:
-                return default;
+                return default; // shorthand for Result<T>.None
         }
     }
 }
