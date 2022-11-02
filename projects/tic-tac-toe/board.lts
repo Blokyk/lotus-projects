@@ -1,0 +1,77 @@
+struct BoardInfo {
+    board: mut mut char[][]; // fixme(syntax): god i didn't think about double mutability in arrays
+    playerChars: char[];
+    size: int;
+}
+
+enum BoardState {
+    Playable,
+    Full,
+    Won(char winnerChar)
+}
+
+func getBoardState(BoardInfo boardInfo): BoardState {
+    // todo(syntax): if we ever get some kind of "generalized" dowstreaming
+    // target-type info, we should get rid of all that BoardState repetition
+
+    foreach (playerChar in boardInfo.playerChars) {
+        if (didPlayerWin(playerChar))
+            return BoardState.Won(playerChar);
+    }
+
+    return
+        board.any(l => l.any(c => ' '))
+            ? BoardState.Playable
+            : BoardState.Full
+        ;
+
+    func didPlayerWin(char playerChar): bool {
+        let board = boardInfo.board;
+
+        // lines
+        for (int y = 0, y < boardInfo.size, y++) {
+            if (board[y].all(c => c == playerChar))
+                return true;
+        }
+
+        // columns
+        for (int x = 0, x < boardInfo.size, x++) {
+            // for each line, check that the case at `x` is the right char
+            if (board.all(line => line[x] == playerChar))
+                return true;
+        }
+
+        // diagonals
+        // top-left => bottom-right
+        if (board.all((line, i) => line[i] == playerChar))
+            return true;
+
+        // top-right => bottom-left
+        if (board.all((line, i) => line[boardInfo.size - i] == playerChar)) // todo(semantic): should we allow negative idxs à-la python ?
+            return true;
+
+        return false;
+    }
+}
+
+func printBoard(BoardInfo boardInfo): void {
+    func printSeparators(char junctionChar, char emptyChar) {
+        for (int i = 0, i < boardInfo.size - 1, i++) {
+            console.write(junctionChar);
+            print(str(emptyChar, count: 3));
+        }
+
+        print(junctionChar);
+    }
+
+    printSeparators('+', '-');
+
+    for (int y = 0, y < boardInfo.size, y++) {
+        for (int x = 0, x < boardInfo.size, x++) {
+            print($"| {boardInfo.board[y][x]} |");
+        }
+
+        printSeparators('|', ' ');
+        printSeparators('+', '-');
+    }
+}

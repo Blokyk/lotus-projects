@@ -1,0 +1,93 @@
+import fmt, console from std;
+import HashMap from std;
+
+func main(): void {
+    print("=== TIC TAC TOE ===");
+
+    console.write("Choose the size: ");
+    while !((var size ?= fmt.parse_int(readLine())) && size > 0) {
+        print("Not a number, please try again.");
+        console.write("Choose the size: ");
+    }
+
+    let playerChars = getPlayerChars();
+    let playerCount = playerChars.count;
+
+    var boardInfo = BoardInfo {
+        board: char[char[' '; boardSize]; boardSize], // todo(syntax): 2d array init is clunky as hell
+        playerChars,
+        boardSize
+    };
+
+    print("--- Let's game on! ---");
+
+    while !(getBoardState(boardInfo) is BoardState.Won) {
+        for (int i = 0, i < playerCount, i++) {
+            print($"It's P{i+1}'s turn!");
+
+            var (x, y) = getPlayerMove();
+
+            while (boardInfo.board[y][x] != ' ') {
+                print($"({x}, {y}) is already taken, please choose another spot.");
+                (x, y) = getPlayerMove();
+            }
+
+            boardInfo.board[y][x] = playerChars[i];
+        }
+    }
+
+    let winnerIdx = playerChars.indexOf((getBoardState(boardInfo) as Won)!.winnerChar)!;
+
+    print("Congratulations, P{winnerIdx+1}! You won!");
+}
+
+func getPlayerMove(): (int, int) {
+    console.write("Please specify the coordinates of your next move (in 'x, y' format): ");
+    let numStrs = readLine().split(',');
+
+    if (numStrs.count != 2) {
+        print("Not in the right format! Needs to be in 'x, y' format (e.g. 2, 1).");
+        return getPlayerMove();
+    }
+
+    let nums = numStrs.select(s => fmt.parse_int(s).only_if(n => n > 0));
+
+    // todo(stdlib): def would be func allOk<T>(Collection<Result<T>> this) => this.all(i => i.is_ok()))
+    if (!nums.allOk()) {
+        print("Coordinates need to be both positive integers.");
+        return getPlayerMove();
+    }
+
+    return (nums[0], nums[1]);
+}
+
+func getPlayerChars(): char[] {
+    var playerChars = char[];
+    print("Choose a character for each player, then press 'Enter' when you're ready: ");
+
+    int playerNum = 1;
+    while (true) {
+        console.write($"P{playerNum}: ");
+
+        let line = readLine();
+
+        if (line.length == 0) // we got an empty line
+            break;
+
+        if (line.length != 1) {
+            print($"Please only choose one character at a time, not \"{line.length}\"");
+            continue;
+        }
+
+        let c = line[0];
+
+        if !(playerChars.tryAdd(c)) {
+            print($"Character '{c}' is already taken");
+            continue;
+        }
+
+        playerNum++; // only do it if everything's okay
+    }
+
+    return playerChars;
+}
