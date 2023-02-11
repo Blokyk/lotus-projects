@@ -6,7 +6,7 @@ enum MoveTypes {
 // because instance impls on ADUs might mean override-hell all over again ;-;
 
 impl MoveTypes { // != impl this for MoveTypes
-    func parse(in string str): MoveTypes? { // todo(syntax): Result<T> shorthand
+    func parse(in string str): MoveTypes? { // todo(syntax): Result[T] shorthand
         // todo(syntax): allow switch/match expressions
 
         // todo(semantic): IF we get switch expressions, we should try to add

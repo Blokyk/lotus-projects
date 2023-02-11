@@ -1,11 +1,10 @@
-import fmt, console from std;
-import HashMap from std;
+using { console, fmt } from std;
 
 func main(): void {
     print("=== TIC TAC TOE ===");
 
     console.write("Choose the size: ");
-    while !((var size ?= fmt.parse_int(readLine())) && size > 0) {
+    while !((var size ?= fmt.parseInt(readLine())) && size > 0) {
         print("Not a number, please try again.");
         console.write("Choose the size: ");
     }
@@ -36,7 +35,7 @@ func main(): void {
         }
     }
 
-    let winnerIdx = playerChars.indexOf((getBoardState(boardInfo) as Won)!.winnerChar)!;
+    let winnerIdx = playerChars.indexOf((getBoardState(boardInfo) as BoardState.Won)!.winnerChar)!;
 
     print("Congratulations, P{winnerIdx+1}! You won!");
 }
@@ -50,9 +49,9 @@ func getPlayerMove(): (int, int) {
         return getPlayerMove();
     }
 
-    let nums = numStrs.select(s => fmt.parse_int(s).only_if(n => n > 0));
+    let nums = numStrs.select(s => fmt.parseInt(s).onlyIf(n => n > 0));
 
-    // todo(stdlib): def would be func allOk<T>(Collection<Result<T>> this) => this.all(i => i.is_ok()))
+    // todo(stdlib): def would be func allOk[T](Collection[Result[T]] this) => this.all(i => i.is_ok()))
     if (!nums.allOk()) {
         print("Coordinates need to be both positive integers.");
         return getPlayerMove();

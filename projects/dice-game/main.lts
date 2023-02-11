@@ -1,4 +1,4 @@
-import random, console from std;
+using { random, console } from std;
 
 func main(): void {
     var ai_points = 0;
@@ -11,7 +11,7 @@ func main(): void {
         print($"AI rolled {ai_num}");
 
         let player_num = random.next(1, 7);
-        print($"But you rolled {player_num}!");
+        print($"And you rolled {player_num}!");
 
         if (player_num < ai_num) {
             print("Sorry :(");

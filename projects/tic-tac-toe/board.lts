@@ -1,5 +1,6 @@
 struct BoardInfo {
-    board: mut mut char[][]; // fixme(syntax): god i didn't think about double mutability in arrays
+    // fixme(syntax): god i didn't think about double mutability in 2d-arrays
+    board: mut mut char[][]; // <=> mut (mut char[])[]
     playerChars: char[];
     size: int;
 }

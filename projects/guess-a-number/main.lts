@@ -1,4 +1,4 @@
-using random, fmt from std;
+using { random, fmt } from std;
 
 func main(): void { // todo(syntax): allow omitting 'void'
     let target = random.next(0, 101);

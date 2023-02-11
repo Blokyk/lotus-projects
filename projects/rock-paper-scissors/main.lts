@@ -1,4 +1,4 @@
-using random, fmt from std;
+using { random, fmt } from std;
 
 // since move_type.lts doesn't declare any namespace, it's added to <global-namespace>,
 // so we don't need to import it (and since it doesn't have a namespace, we wouldn't be
